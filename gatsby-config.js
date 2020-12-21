@@ -3,12 +3,12 @@
  *
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
- var path = require('path');
+const path = require('path')
 
 module.exports = {
   /* Your site config here */
   siteMetadata: {
-    title: 'Pandas Eating Lots',
+    title: 'Blessings for 2021',
     description: 'Blessing for my friends as we enter 2021.'
   },
   plugins: [
@@ -19,9 +19,10 @@ module.exports = {
         path: path.join(__dirname, '/src')
       }
     },
-    'gatsby-plugin-use-query-params',
     'gatsby-transformer-remark',
+    'gatsby-transformer-json',
     'gatsby-plugin-emotion',
+    'gatsby-plugin-use-query-params',
     {
       resolve: 'gatsby-plugin-typography',
       options: {
