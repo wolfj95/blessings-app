@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 
 import Layout from '../components/layout'
 import Blessing from '../components/blessing'
+import Drawing from '../components/drawing'
 
 export default function BlessingPage ({ data }) {
   const pageData = data['pagesJson']
@@ -12,6 +13,7 @@ export default function BlessingPage ({ data }) {
       <div>
         <h1>{pageData.name}</h1>
         <Blessing blessing={blessing} />
+        <Drawing />
       </div>
     </Layout>
   )
