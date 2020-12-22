@@ -20,7 +20,6 @@ export default function Layout ({ children }) {
     <div
       css={css`
         margin: 0 auto;
-        max-width: 700px;
         padding: ${rhythm(2)};
         padding-top: ${rhythm(1.5)};
       `}
@@ -31,6 +30,7 @@ export default function Layout ({ children }) {
             margin-bottom: ${rhythm(2)};
             display: inline-block;
             font-style: normal;
+            position: fixed;
           `}
         >
       {data.site.siteMetadata.title}

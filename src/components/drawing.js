@@ -1,13 +1,15 @@
 import React from 'react'
 import paper, { Point, Path } from 'paper'
 
+const canvasSize = 400
+
 class Drawing extends React.Component {
   componentDidMount () {
     // paperjs
     paper.setup(this.canvas)
     paper.tools.forEach(tool => tool.remove())
 
-    const boundingCircSize = 150
+    const boundingCircSize = canvasSize / 2 - 50
     const boundingCirc = new Path.Circle(paper.view.center, boundingCircSize)
 
     const numPoints = 1000
@@ -55,7 +57,7 @@ class Drawing extends React.Component {
     return (
       <canvas
         resize='true'
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: canvasSize, height: canvasSize }}
         ref={el => {
           this.canvas = el
         }}

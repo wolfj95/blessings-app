@@ -8,7 +8,7 @@ const path = require('path')
 module.exports = {
   /* Your site config here */
   siteMetadata: {
-    title: 'Blessings for 2021',
+    title: 'blessings',
     description: 'Blessing for my friends as we enter 2021.'
   },
   plugins: [
