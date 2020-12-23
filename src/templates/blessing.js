@@ -35,6 +35,7 @@ export default class BlessingPage extends React.Component {
   }
 
   render () {
+    console.log(this.state.blessing)
     return (
       <Layout>
         <div
@@ -52,7 +53,7 @@ export default class BlessingPage extends React.Component {
             css={[centered, container]}
           >
             <Waypoint onEnter={({ event }) => {
-              this.drawingRef.current.changeDrawing({drawing: 'scribble'})
+              this.drawingRef.current.changeDrawing({drawing: -1})
             }}
             />
             <h1> {this.state.blessing.title} </h1>
@@ -60,7 +61,7 @@ export default class BlessingPage extends React.Component {
           <div
             css={[container, centered, stick]}
           >
-            <Drawing ref={this.drawingRef} />
+            <Drawing ref={this.drawingRef} drawingData={this.state.pageData.drawings}/>
           </div>
           {this.state.blessing.stanzas.map((stanza, index) =>
             <div
@@ -91,6 +92,13 @@ export default class BlessingPage extends React.Component {
       pagesJson(fields: { slug: { eq: $slug } }) {
         name
         blessing
+        drawings {
+          path
+          translation {
+            x
+            y
+          }
+        }
       }
       blessingsJson(title: {eq: $blessing}) {
         stanzas

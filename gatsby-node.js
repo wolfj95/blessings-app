@@ -24,6 +24,13 @@ exports.createPages = async ({ graphql, actions }) => {
               slug
             }
             blessing
+            drawings {
+              path
+              translation {
+                x
+                y
+              }
+            }
           }
         }
       }
@@ -37,7 +44,8 @@ exports.createPages = async ({ graphql, actions }) => {
         // Data passed to context is available
         // in page queries as GraphQL variables.
         slug: node.fields.slug,
-        blessing: node.blessing
+        blessing: node.blessing,
+        drawings: node.drawings
       }
     })
   })
