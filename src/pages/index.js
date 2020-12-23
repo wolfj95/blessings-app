@@ -1,23 +1,34 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 import { css } from '@emotion/react'
-import { useQueryParam, NumberParam, StringParam } from 'use-query-params'
 import { rhythm } from '../utils/typography'
+import qs from 'qs'
 
 import Layout from '../components/layout'
 import { container, centered } from '../components/container'
 
 export default class Home extends React.Component {
-  handleChange (event) {
-    this.setState({ value: event.target.value })
+  state = {
+    urlName: '',
+    nameInput: ''
+  }
+  componentDidMount () {
   }
 
-  handleSubmit (event) {
+  handleChange = event => {
+    this.setState({ nameInput: event.target.value })
+  }
+
+  handleSubmit = event => {
     event.preventDefault()
+    navigate('/' + this.state.nameInput.toLowerCase() + '/')
   }
 
   render () {
-    const [name, setName] = useQueryParam('name', StringParam)
+    const urlParams = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })
+    if (urlParams['name']){
+      this.state.urlName = urlParams['name']
+    }
     return (
       <Layout>
         <div
@@ -37,11 +48,19 @@ export default class Home extends React.Component {
             <h1>A blessing for 2021</h1>
             <p> Hello, Friends. It&apos;s been a long year. </p>
             <div>
-              {name
-                ? <Link to={'/' + name + '/'}>your blessing &rarr;</Link>
+              {this.state.urlName
+                ? <Link to={'/' + this.state.urlName + '/'}>your blessing &rarr;</Link>
                 : <form onSubmit={this.handleSubmit}>
-                    <input type="text" name='name' value={this.state.value} onChange={this.handleChange}/>
-                    <input type="submit" value="Submit" />
+                    <input type="text" name='name' placeholder='Who are you?' value={this.state.nameInput} onChange={this.handleChange}/>
+                    <input type='submit' value='your blessing &rarr;' disabled={this.state.nameInput===''} 
+                        css={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#9f392b',
+                          textDecoration: 'underline',
+                          cursor: 'pointer'
+                        }}
+                    />
                   </form>
               }
             </div>

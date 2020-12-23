@@ -9,7 +9,10 @@ module.exports = {
   /* Your site config here */
   siteMetadata: {
     title: 'blessings',
-    description: 'Blessing for my friends as we enter 2021.'
+    titleTemplate: '%s • hello from jacob',
+    description: 'Blessing for my friends as we enter 2021.',
+    url: 'https://blessings.jacobhwolf.com',
+    image: '/images/favicon.png'
   },
   plugins: [
     {
@@ -22,6 +25,7 @@ module.exports = {
     'gatsby-transformer-remark',
     'gatsby-transformer-json',
     'gatsby-plugin-emotion',
+    'gatsby-plugin-react-helmet',
     'gatsby-plugin-use-query-params',
     {
       resolve: 'gatsby-plugin-typography',

@@ -4,6 +4,15 @@ import paper, { Point, Path } from 'paper'
 const canvasSize = 400
 
 class Drawing extends React.Component {
+  constructor( props ) {
+    super(props)
+    this.state = { drawing: 'scribble' }
+  }
+
+  changeDrawing( props ) {
+    this.setState({ drawing: props.drawing })
+  }
+
   componentDidMount () {
     // paperjs
     paper.setup(this.canvas)
@@ -28,6 +37,7 @@ class Drawing extends React.Component {
 
     paper.view.onFrame = (event) => {
       if (event.count % 3 === 0) {
+        console.log(this.state.drawing)
         for (let i = 0; i < numPoints; i++) {
           const segment = line.segments[i]
           if (i === line.segments.length - 1) {
