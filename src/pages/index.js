@@ -49,10 +49,10 @@ export default class Home extends React.Component {
             <p> Hello, Friends. It&apos;s been a long year. </p>
             <div>
               {this.state.urlName
-                ? <Link to={'/' + this.state.urlName + '/'}>your blessing &rarr;</Link>
+                ? <Link to={'/' + this.state.urlName + '/'}>go &rarr;</Link>
                 : <form onSubmit={this.handleSubmit}>
                     <input type="text" name='name' placeholder='Who are you?' value={this.state.nameInput} onChange={this.handleChange}/>
-                    <input type='submit' value='your blessing &rarr;' disabled={this.state.nameInput===''} 
+                    <input type='submit' value='go &rarr;' disabled={this.state.nameInput===''} 
                         css={{
                           background: 'none',
                           border: 'none',

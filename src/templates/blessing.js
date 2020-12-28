@@ -10,7 +10,7 @@ import Drawing from '../components/drawing'
 const stick = css({
   height: '500px',
   position: 'sticky',
-  top: 'calc(50vh - 250px + 32px + 10px)'
+  top: 'calc(25vh - 30vw + 16px)'
 })
 
 function Stanza (props) {
@@ -27,49 +27,67 @@ export default class BlessingPage extends React.Component {
   constructor (props) {
     super(props)
     this.state =
-                {
-                  pageData: props.data['pagesJson'],
-                  blessing: props.data['blessingsJson']
-                }
+      {
+        pageData: props.data['pagesJson'],
+        blessing: props.data['blessingsJson']
+      }
     this.drawingRef = React.createRef()
   }
 
   render () {
-    console.log(this.state.blessing)
     return (
       <Layout>
         <div
           css={{
             display: 'grid',
             gridGap: 16,
-            gridTemplateColumns: 'repeat(1, 80%)',
+            gridTemplateColumns: 'repeat(1, 100%)',
             '@media screen and (min-width: 40em)': {
               gridTemplateColumns: '60% 30%'
             },
-            gridTemplateRows: 'repeat(' + (this.state.blessing.stanzas.length) + ', 100vh) 50vh'
+            gridTemplateRows: 'repeat(' + (this.state.blessing.stanzas.length) + ', calc(100vh - 2.16rem)) 50vh'
           }}
         >
           <div
-            css={[centered, container]}
+            css={[
+              centered,
+              container,
+              {
+                gridRow: 1,
+                gridColumn: 1
+              }
+            ]}
           >
             <Waypoint onEnter={({ event }) => {
               this.drawingRef.current.changeDrawing({drawing: -1})
             }}
             />
-            <h1> {this.state.blessing.title} </h1>
+            <h1 css={{ marginBottom: 0 }} > {this.state.blessing.title} </h1>
           </div>
           <div
-            css={[container, centered, stick]}
+            css={[
+              container,
+              stick,
+              {
+                gridRow: 1,
+                gridColumn: 1,
+                justifySelf: 'center',
+                '@media screen and (min-width: 40em)': {
+                  gridColumn: 2,
+                  alignSelf: 'center',
+                  top: 'calc(2.16rem +  ((100vh - 2.16rem) / 2) - min(15vw + 32px, 250px))'
+                }
+              }
+            ]}
           >
-            <Drawing ref={this.drawingRef} drawingData={this.state.pageData.drawings}/>
+            <Drawing ref={this.drawingRef} drawingData={this.state.pageData.drawings} />
           </div>
           {this.state.blessing.stanzas.map((stanza, index) =>
             <div
               css={[
                 container,
                 {
-                  gridRowStart: index + 2,
-                  gridRowEnd: index + 2
+                  gridRow: index + 2
                 }
               ]}
               key={stanza}

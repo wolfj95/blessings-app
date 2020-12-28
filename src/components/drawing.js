@@ -1,23 +1,22 @@
 import React from 'react'
+import { css } from '@emotion/react'
 import paper, { Point, Path } from 'paper'
 
-const canvasSize = 400
-
+const standardCanvasSize = 400
 
 class Drawing extends React.Component {
   constructor (props) {
-    console.log(props)
     super(props)
     this.state = {
       drawingNum: -1,
       onPath: false,
-      numPoints: 500,
       gapPoints: 10,
       currOffset: 0,
       speed: 4,
       direction: 1,
       drawingData: props.drawingData
     }
+    this.numPoints = 500
     this.paths = {
       line: null,
       boundingCirc: null,
@@ -33,8 +32,8 @@ class Drawing extends React.Component {
   setupLinePathInCircle ({ boundingCircSize }) {
     this.paths.line = new Path()
     this.paths.line.strokeColor = 'black'
-    for (let i = 0; i < this.state.numPoints; i++) {
-      const angleDeg = 360 / this.state.numPoints * i
+    for (let i = 0; i < this.numPoints; i++) {
+      const angleDeg = 360 / this.numPoints * i
       const angleRad = angleDeg * (Math.PI / 180)
       const x = boundingCircSize * Math.cos(angleRad)
       const y = boundingCircSize * Math.sin(angleRad)
@@ -48,7 +47,7 @@ class Drawing extends React.Component {
     let vector = segment.point.subtract(prevSegment.point)
     const newPoint = segment.point.add(vector)
     if (!this.paths.boundingCirc.contains(newPoint)) {
-      vector.angle += 20 * this.state.direction
+      vector.angle += 40 * this.state.direction
     } else {
       if (Math.random() < 0.05) {
         this.setState({ direction: this.state.direction * -1 })
@@ -64,13 +63,11 @@ class Drawing extends React.Component {
     const currDrawing = this.paths.drawings[this.state.drawingNum]
     if (this.state.onPath) {
       // followPath
-      this.setState({ currOffset: (this.state.currOffset + (currDrawing.length / (this.state.numPoints + this.state.gapPoints))) % currDrawing.length })
+      this.setState({ currOffset: (this.state.currOffset + (currDrawing.length / (this.numPoints + this.state.gapPoints))) % currDrawing.length })
       const nextPoint = currDrawing.getPointAt(this.state.currOffset)
       segment.point = nextPoint
     // if the line needs to find the path of the shape
     } else {
-      console.log(currDrawing)
-      console.log(segment)
       const nearestPoint = currDrawing.getNearestPoint(segment.point)
       let vectToNearestPoint = nearestPoint.subtract(segment.point)
       // if the leading point can move to the path in one step, do so
@@ -102,25 +99,25 @@ class Drawing extends React.Component {
     paper.tools.forEach(tool => tool.remove())
 
     // setup bounding circle
-    const boundingCircSize = canvasSize / 2 - 50
+    const boundingCircSize = this.canvas.offsetWidth / 2 - 50
     this.paths.boundingCirc = new Path.Circle(paper.view.center, boundingCircSize)
 
     // setup drawings
     for (let i = 0; i < this.state.drawingData.length; i++) {
       const drawing = new Path(this.state.drawingData[i].path)
-      console.log(this.state.drawingData[i].translation)
-      const translation = new Point(this.state.drawingData[i].translation.x, this.state.drawingData[i].translation.y)
-      drawing.translate(translation)
+      drawing.fitBounds(this.paths.boundingCirc.bounds)
       this.paths.drawings.push(drawing)
     }
 
     // setup line
+    // shorter line for smaller canvas
+    this.numPoints = this.numPoints * (this.canvas.offsetWidth / standardCanvasSize)
     this.setupLinePathInCircle({ boundingCircSize: boundingCircSize })
 
 
     paper.view.onFrame = (event) => {
       if (event.count % 3 === 0) {
-        for (let i = 0; i < this.state.numPoints; i++) {
+        for (let i = 0; i < this.numPoints; i++) {
           const segment = this.paths.line.segments[i]
           // if leading point in path
           if (i === this.paths.line.segments.length - 1) {
@@ -137,8 +134,15 @@ class Drawing extends React.Component {
   render () {
     return (
       <canvas
+        css={{
+          width: '60vw',
+          height: '60vw',
+          '@media screen and (min-width: 40em)': {
+            width: '30vw',
+            height: '30vw'
+          }
+        }}
         resize='true'
-        style={{ width: canvasSize, height: canvasSize }}
         ref={el => {
           this.canvas = el
         }}

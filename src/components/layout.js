@@ -31,9 +31,13 @@ export default function Layout ({ children }) {
           <h3
             css={css`
               margin-bottom: ${rhythm(2)};
+              margin-left: auto;
+              padding: 16px;
               display: inline-block;
               font-style: normal;
               position: fixed;
+              background-color: black;
+              color: #fffaf0;
             `}
           >
         {data.site.siteMetadata.title}
