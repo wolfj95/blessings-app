@@ -24,13 +24,7 @@ exports.createPages = async ({ graphql, actions }) => {
               slug
             }
             blessing
-            drawings {
-              path
-              translation {
-                x
-                y
-              }
-            }
+            drawings
           }
         }
       }

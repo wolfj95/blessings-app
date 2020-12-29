@@ -26,10 +26,19 @@ function Stanza (props) {
 export default class BlessingPage extends React.Component {
   constructor (props) {
     super(props)
+    console.log(props.data['allDrawingsJson']['nodes'])
+    console.log(props.data['pagesJson'].drawings)
     this.state =
       {
         pageData: props.data['pagesJson'],
-        blessing: props.data['blessingsJson']
+        blessing: props.data['blessingsJson'],
+        drawings: props.data['allDrawingsJson']['nodes'].sort((a, b) => {
+          // sort drawing data so it matches order from page JSON
+          // will break if elements aren't unique i.e. drawing is repeated
+          const indexA = props.data['pagesJson'].drawings.indexOf(a['name'])
+          const indexB = props.data['pagesJson'].drawings.indexOf(b['name'])
+          return indexA - indexB
+        })
       }
     this.drawingRef = React.createRef()
   }
@@ -80,7 +89,7 @@ export default class BlessingPage extends React.Component {
               }
             ]}
           >
-            <Drawing ref={this.drawingRef} drawingData={this.state.pageData.drawings} />
+            <Drawing ref={this.drawingRef} drawingsOrder={this.state.pageData.drawings} drawingData={this.state.drawings} />
           </div>
           {this.state.blessing.stanzas.map((stanza, index) =>
             <div
@@ -106,21 +115,21 @@ export default class BlessingPage extends React.Component {
 }
 
   export const query = graphql`
-    query($slug: String!, $blessing: String!) {
+    query($slug: String!, $blessing: String!, $drawings: [String]!) {
       pagesJson(fields: { slug: { eq: $slug } }) {
         name
         blessing
-        drawings {
-          path
-          translation {
-            x
-            y
-          }
-        }
+        drawings
       }
       blessingsJson(title: {eq: $blessing}) {
         stanzas
         title
+      }
+      allDrawingsJson(filter: {name: {in: $drawings}}) {
+        nodes {
+          name
+          path
+        }
       }
     }
 `
