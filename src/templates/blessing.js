@@ -54,7 +54,7 @@ export default class BlessingPage extends React.Component {
             '@media screen and (min-width: 40em)': {
               gridTemplateColumns: '60% 30%'
             },
-            gridTemplateRows: 'repeat(' + (this.state.blessing.stanzas.length) + ', calc(100vh - 2.16rem)) 50vh'
+            gridTemplateRows: 'repeat(' + (this.state.blessing.stanzas.length + 1) + ', calc(100vh - 2.16rem))'
           }}
         >
           <div
@@ -95,6 +95,7 @@ export default class BlessingPage extends React.Component {
             <div
               css={[
                 container,
+                centered,
                 {
                   gridRow: index + 2
                 }
