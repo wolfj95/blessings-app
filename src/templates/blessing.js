@@ -26,8 +26,6 @@ function Stanza (props) {
 export default class BlessingPage extends React.Component {
   constructor (props) {
     super(props)
-    console.log(props.data['allDrawingsJson']['nodes'])
-    console.log(props.data['pagesJson'].drawings)
     this.state =
       {
         pageData: props.data['pagesJson'],

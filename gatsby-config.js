@@ -12,7 +12,7 @@ module.exports = {
     titleTemplate: '%s • hello from jacob',
     description: 'Blessing for my friends as we enter 2021.',
     url: 'https://blessings.jacobhwolf.com',
-    image: '/images/favicon.png'
+    image: 'src/images/favicon.png'
   },
   plugins: [
     {
@@ -21,6 +21,20 @@ module.exports = {
         name: 'src',
         path: path.join(__dirname, '/src')
       }
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `blessings`,
+        short_name: `blessings`,
+        start_url: `/`,
+        // background_color: `#6b37bf`,
+        // theme_color: `#6b37bf`,
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        // display: `standalone`,
+        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
+      },
     },
     'gatsby-transformer-remark',
     'gatsby-transformer-json',
