@@ -7,10 +7,8 @@ export const container = css({
   paddingLeft: 16,
   paddingRight: 16,
   paddingTop: 32,
-  paddingBottom: 32
-})
-
-export const centered = css({
-  justifySelf: 'center',
-  alignSelf: 'center'
+  paddingBottom: 32,
+  '@media screen and (min-width: 40em)': {
+    width: 500,
+  }
 })

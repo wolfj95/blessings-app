@@ -4,7 +4,7 @@ import { css } from '@emotion/react'
 import { Waypoint } from 'react-waypoint';
 
 import Layout from '../components/layout'
-import { container, centered } from '../components/container'
+import { container } from '../components/container'
 import Drawing from '../components/drawing'
 
 const stick = css({
@@ -52,18 +52,20 @@ export default class BlessingPage extends React.Component {
             gridGap: 16,
             gridTemplateColumns: 'repeat(1, 100%)',
             '@media screen and (min-width: 40em)': {
-              gridTemplateColumns: '60% 30%'
+              gridTemplateColumns: '60% 30%',
+              marginLeft: 150
             },
             gridTemplateRows: 'repeat(' + (this.state.blessing.stanzas.length + 1) + ', calc(100vh - 2.16rem))'
           }}
         >
           <div
             css={[
-              centered,
               container,
               {
                 gridRow: 1,
-                gridColumn: 1
+                gridColumn: 1,
+                justifySelf: 'center',
+                alignSelf: 'center'
               }
             ]}
           >
@@ -75,7 +77,6 @@ export default class BlessingPage extends React.Component {
           </div>
           <div
             css={[
-              container,
               stick,
               {
                 gridRow: 1,
@@ -95,9 +96,9 @@ export default class BlessingPage extends React.Component {
             <div
               css={[
                 container,
-                centered,
                 {
-                  gridRow: index + 2
+                  gridRow: index + 2,
+                  alignSelf: 'center'
                 }
               ]}
               key={stanza}
