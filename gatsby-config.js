@@ -11,7 +11,7 @@ module.exports = {
     title: 'blessings',
     titleTemplate: '%s • hello from jacob',
     description: 'Blessing for my friends as we enter 2021.',
-    url: 'https://blessings.jacobhwolf.com',
+    url: 'https://blessings.wolfie.dev',
     image: 'src/images/favicon.png'
   },
   plugins: [

@@ -1,16 +1,16 @@
 const path = require('path')
 const { createFilePath } = require('gatsby-source-filesystem')
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => { 
-  if (stage === "build-html") { 
-    actions.setWebpackConfig({ 
-      module: { 
-        rules: [ { 
-          test: /node_modules\/paper/, use: loaders.null(), 
-        }, ], 
-      }, 
-    }) 
-  } 
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === 'build-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [{
+          test: /node_modules\/paper/, use: loaders.null()
+        }]
+      }
+    })
+  }
 }
 
 exports.onCreateNode = ({ node, getNode, actions }) => {

@@ -152,3 +152,4 @@ class Drawing extends React.Component {
 }
 
 export default Drawing
+
