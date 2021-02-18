@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/oqnnhgsu32sf/public_html/blessings.wolfie.dev
+    - export DEPLOYPATH=/home/wolfiede/public_html/blessings.wolfie.dev
     - /bin/cp -R public/* $DEPLOYPATH
